@@ -5,14 +5,9 @@ package GenericsChallenge;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class League<T extends Team> implements Comparable<League<T>> {
+public class League<T extends Team> {
 
     private String name;
-    int played = 0;
-    int won = 0;
-    int lost = 0;
-    int tied = 0;
-
     private ArrayList<T> leagueTable = new ArrayList<>();
 
 
@@ -44,47 +39,10 @@ public class League<T extends Team> implements Comparable<League<T>> {
     }
 
 
-    public void gameResult(League<T> opponent, int ourScore, int opponentScore){
+    public void printOrderedTeams(){
 
-        String message;
-        if(ourScore > opponentScore){
-            won++;
-            message = " beat ";
-        }else if(ourScore == opponentScore){
-            tied++;
-            message = " tied with ";
-        }else{
-            lost++;
-            message = " lost to ";
-        }
+        Collections.sort(this.leagueTable);
 
-        played++;
-        if(opponent != null){
-            System.out.println(this.getName() + message + opponent.getName());
-            opponent.gameResult(null, opponentScore, ourScore);
-        }
-    }
-
-
-    public int ranking(){
-        return (((4 * won) + tied) - (2 * lost));
-    }
-
-
-    @Override
-    public int compareTo(League<T> opponent) {
-        if(this.ranking() > opponent.ranking()){
-            return -1;
-        }else if(this.ranking() < opponent.ranking()){
-            return 1;
-        }else{
-            return 0;
-        }
-    }
-
-
-    public void printOrderedTeams(ArrayList<T> teams){
-
-        Collections.sort(teams);
+        System.out.println(this.leagueTable);
     }
 }
